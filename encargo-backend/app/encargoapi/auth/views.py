@@ -1,3 +1,9 @@
+from flask import (
+    jsonify,
+    request,
+    g,
+)
+
 from . import auth
 from encargoapi import app
 from encargoapi.user.model import User
@@ -12,5 +18,5 @@ def get_auth_token():
 @app.route('/api/v1.0/token/check')
 @auth.login_required
 def check_auth_token():
-    token = User.verify_auth_token(request.get['token'])
+    token = User.verify_auth_token(request.json.get('token'))
     return jsonify({ 'token': token.decode('ascii') })

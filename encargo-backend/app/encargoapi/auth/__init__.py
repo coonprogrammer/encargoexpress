@@ -1,11 +1,12 @@
 from encargoapi.user.model import User
 
 from flask import (
+    g,
     jsonify,
     make_response,
-    g,
 )
-from flask.ext.httpauth import HTTPBasicAuth
+from flask_httpauth import HTTPBasicAuth
+
 
 auth = HTTPBasicAuth()
 

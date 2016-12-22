@@ -11,6 +11,9 @@ from flask import (
     url_for,
 )
 
+@app.route('/api/v1.0/users', methods = ['GET'])
+def user():
+    return jsonify({'users': 'ok'})
 
 @app.route('/api/v1.0/users', methods = ['POST'])
 def create_user():
@@ -24,23 +27,26 @@ def create_user():
     user.hash_password(password)
     db.session.add(user)
     db.session.commit()
-    return jsonify({ 'username': user.username }), 201, {'Location': url_for('get_user', id = user.id, _external = True)}
+    return jsonify(
+        {
+            'id':user.id,
+            'username':user.username,
+        }
+    ), 201, {'Location': url_for('get_user', user = user, _external = True)}
 
 
 @app.route('/api/v1.0/resource')
 @auth.login_required
 def get_resource():
-    return jsonify({ 'data': 'Hello, %s!' % g.user.username })
+    return jsonify({ 'data': 'Hello, {}!'.format(g.user.username) })
 
 
-@app.route('/api/v1.0/get_user')
+@app.route('/api/v1.0/user', methods=['GET'])
 @auth.login_required
 def get_user():
-    return jsonify({ 'data': 'Hello, %s!' % g.user.username })
-
-
-@app.route('/api/v1.0/token')
-@auth.login_required
-def get_auth_token():
-    token = g.user.generate_auth_token()
-    return jsonify({ 'token': token.decode('ascii') })
+    return jsonify({
+        'user': {
+            'id': g.user.id,
+            'username': g.user.username,
+        }
+    })

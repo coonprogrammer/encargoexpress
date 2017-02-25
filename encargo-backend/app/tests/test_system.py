@@ -4,7 +4,7 @@ from . import TestBase
 
 class TestSystem(TestBase):
     
-    def test_syste(self):
+    def test_system(self):
         response = self.app.get(
             '/testsystem',
             headers={'content-type': 'application/json'},

@@ -15,15 +15,17 @@ from flask import (
 @app.route('/api/v1.0/clients', methods=['POST'])
 @auth.login_required
 def create_client():
-    client_type = request.json.get('client_type')
     name = request.json.get('name')
     address = request.json.get('address')
+    client_type = request.json.get('client_type')
+    client_identifier_type = request.json.get('client_identifier_type')
     identifier = request.json.get('identifier')
     phone = request.json.get('phone')
     contact = request.json.get('contact')
 
     if (
         client_type is None or
+        client_identifier_type is None or
         address is None or
         name is None or
         identifier is None
@@ -33,10 +35,11 @@ def create_client():
         abort(400)  # existing client
 
     client = Client(
-        client_type=client_type,
         address=address,
         name=name,
         identifier=identifier,
+        client_type=client_type,
+        client_identifier_type=client_identifier_type,
         contact=contact,
         phone=phone,
     )

@@ -1,0 +1,9 @@
+{
+    "name": "react-song-rate",
+    "dependencies": {
+        "react": "latest",
+        "lodash": "latest",
+        "underscore.string": "latest",
+        "font-awesome": "latest"
+    }
+}

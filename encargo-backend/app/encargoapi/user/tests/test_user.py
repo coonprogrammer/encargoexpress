@@ -9,6 +9,7 @@ class TestUser(TestBase):
 
     def setUp(self):
         super(TestUser, self).setUp()
+
         self.data_user_mock = {
             'username': 'nicolas',
             'password': 'password',
